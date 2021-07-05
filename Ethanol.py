@@ -20,9 +20,6 @@ number_molecules = len(ethanol)
 description_list = []
 property_list = []
 for at in range(number_molecules):
-    # All properties need to be stored as numpy arrays.
-    # Note: The shape for scalars should be (1,), not ()
-    # Note: GPUs work best with float32 data
     change_nuclear = ethanol[at].get_atomic_numbers()
     position_atoms = ethanol[at].get_positions()
     number_atoms = len(change_nuclear)
@@ -70,18 +67,18 @@ data_energy = np.array(data_energy).reshape(-1, 1)
 n_cols = 1
 input1 = keras.Input(shape=(n_cols,), name="H_element")
 l1_1 = Dense(8, activation='relu')(input1)
-l1_2 = Dense(1, activation='linear',name = 'H_atomic_energy')(l1_1) #atomic energy for H
+l1_2 = Dense(1, activation='linear',name = 'H_atomic_energy')(l1_1) # атомный вклад H
 
 # graph for O
 input2 = keras.Input(shape=(n_cols,), name="O_element")
 l2_1 = Dense(8, activation='relu')(input2)
-l2_2 = Dense(1, activation='linear', name = 'O_atomic_energy')(l2_1) #atomic energy for O
+l2_2 = Dense(1, activation='linear', name = 'O_atomic_energy')(l2_1) # атомный вклад O
 
 input3 = keras.Input(shape=(n_cols,), name="C_element")
 l3_1 = Dense(8, activation='relu')(input3)
-l3_2 = Dense(1, activation='linear', name = 'O_atomic_energy')(l3_1) #atomic energy for O
+l3_2 = Dense(1, activation='linear', name = 'O_atomic_energy')(l3_1) # атомный вклад C
 
-# summation and output. Total energy is the target
+
 x = layers.concatenate([l1_2, l2_2, l3_2])
 #ReduceSum = Lambda(lambda z: K.sum(z, axis=1, keepdims=True))
 def ReduceSum(z):
@@ -94,7 +91,7 @@ model = keras.Model(
 
 model.compile(loss='mean_squared_error', optimizer=keras.optimizers.Adam(0.1))
 
-history = model.fit(c, f, epochs=500, verbose=0)
+history = model.fit(c, f, epochs=500, verbose=True)
 print("Обучение завершено")
 x=1
 y=1
