@@ -81,4 +81,4 @@ plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
 plt.show()
 
-print(model.evaluate([test_x_H, test_x_O, test_x_C],test_y_energy))
+model.evaluate([test_x_H, test_x_O, test_x_C],test_y_energy)
