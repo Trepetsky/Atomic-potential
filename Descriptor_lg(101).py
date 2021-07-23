@@ -16,9 +16,7 @@ O_description = []
 C_description = []
 data_energy = []
 
-row_list = []
-for row in db.select():
-    row_list.append(row)
+row_list = [row for row in db.select()]
 
 
 def descriptor(row):
