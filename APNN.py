@@ -21,6 +21,7 @@ O_description = O_description[perm]
 C_description = C_description[perm]
 data_energy = data_energy[perm]
 
+number_molecules = H_description.shape[0]
 train_x_H = H_description[:number_molecules//4]
 train_x_O = O_description[:number_molecules//4]
 train_x_C = C_description[:number_molecules//4]
